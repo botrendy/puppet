@@ -1,0 +1,41 @@
+---
+# Jenkins role
+classes:
+  - jenkins
+  - sbt
+
+##{--- SBT MODULE ---}
+
+sbt::version: '0.11.3'
+##{------------------}
+
+##{--- JENKINS MODULE ---}
+
+jenkins::params:
+  install_java: true 
+
+jenkins::plugin_hash:
+  'git': {}
+  'sbt':
+    'manage_config'  : true
+    config_filename: 'org.jvnet.hudson.plugins.SbtPluginBuilder.xml'
+    'config_content' : 
+     <?xml version='1.0' encoding='UTF-8'?>
+     <org.jvnet.hudson.plugins.SbtPluginBuilder_-DescriptorImpl plugin="sbt@1.4">
+       <jars>
+         <org.jvnet.hudson.plugins.SbtPluginBuilder_-Jar>
+           <name>sbt</name>
+           <path>/usr/share/sbt/bin</path>
+         </org.jvnet.hudson.plugins.SbtPluginBuilder_-Jar>
+       </jars>
+     </org.jvnet.hudson.plugins.SbtPluginBuilder_-DescriptorImpl>
+  'parameterized-trigger': {}
+  'multiple-scms': {}
+  'git-client': {}
+  'token-macro': {}
+  'warnings': {}
+  'analysis-core': {}
+  'scm-api': {}
+  'promoted-builds': {}
+  'htmlpublisher': {}
+##{----------------------}
